@@ -2,7 +2,7 @@
 
 SELECT B.business_name, R.stars
 FROM Business B, Reviews R, Business_location BL
-WHERE B.business_id = BL.business_id and BL.state_name = 'CA'
-    and B.business_id = R.business_id
+WHERE B.business_id = BL.business_id AND BL.state_name = 'CA'
+    AND B.business_id = R.business_id
 ORDER BY R.stars DESC, B.business_name ASC
 LIMIT 10;
