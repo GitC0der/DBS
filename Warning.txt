@@ -1,2 +1,2 @@
-Warning 1: All the current queries have not been used on the DBMS, nor have they been verified in any other way!
+Warning 1: Some of the current queries have not been used on the DBMS, nor have they been verified in any other way!
 Warning 2: Once the DBMS is in place and loaded, save the output that each query produces!

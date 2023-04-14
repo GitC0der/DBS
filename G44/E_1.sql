@@ -1,6 +1,4 @@
--- Warning: the following query has not been used on the DBMs, nor has it been verified in any other way!
-
-SELECT B.business_name, B.review_count
+SELECT DISTINCT B.business_name AS name, B.review_count
 FROM Business B, Business_location BL, Business_parking_type BPT, Parking_type PT,
     Business_hours BH, Day_of_week DW, Reviews R
 WHERE B.business_id = BL.business_id AND BL.city_name = 'las vegas'
