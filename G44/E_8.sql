@@ -1,5 +1,3 @@
--- Warning: the following query has not been used on the DBMs, nor has it been verified in any other way!
-
 SELECT 
   MIN(nb) as min_categories, 
   MAX(nb) as max_categories, 
