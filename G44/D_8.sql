@@ -7,7 +7,13 @@ WITH Top_business AS ( -- find the top 100 reviewed businesses for each city
         FROM Business B, Business_location BL
         WHERE B.business_id = BL.business_id
     )
-    WHERE rank <= 10
+    WHERE rank <= 100 AND city_name IN ( -- eliminate cities that have less than 100 businesses
+        SELECT C.city_name
+        FROM Cities C, Business_location BL
+        WHERE C.city_name = BL.city_name
+        GROUP BY C.city_name
+        HAVING COUNT(BL.business_id) >= 100
+    )
     ORDER BY city_name ASC
 ),
 Top_business_counts AS ( -- find the sum of review counts for the top 100 reviewed businesses for each city
@@ -26,5 +32,3 @@ Total_counts AS ( -- find the sum of review counts for all businesses for each c
 SELECT TC.city_name AS city
 FROM Top_business_counts TBC, Total_counts TC
 WHERE TC.city_name = TBC.city_name AND TBC.top_count >= 2 * (TC.total_count - TBC.top_count)
-
--- note that this returns all cities that have less than 100 businesses!
