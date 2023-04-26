@@ -1,20 +1,19 @@
 WITH Top_business AS ( -- find the top 100 reviewed businesses for each city
     SELECT city_name, business_id AS top_business_id
     FROM (
-        SELECT BL.city_name, BL.business_id, Rank() 
+        SELECT BL.city_name, BL.business_id, ROW_NUMBER()
           OVER (PARTITION BY BL.city_name
-                ORDER BY B.review_count DESC) AS rank
+                ORDER BY B.review_count DESC) AS rnum
         FROM Business B, Business_location BL
         WHERE B.business_id = BL.business_id
     )
-    WHERE rank <= 100 AND city_name IN ( -- eliminate cities that have less than 100 businesses
+    WHERE rnum <= 100 AND city_name IN ( -- eliminate cities that have less than 100 businesses
         SELECT C.city_name
         FROM Cities C, Business_location BL
         WHERE C.city_name = BL.city_name
         GROUP BY C.city_name
         HAVING COUNT(BL.business_id) >= 100
     )
-    ORDER BY city_name ASC
 ),
 Top_business_counts AS ( -- find the sum of review counts for the top 100 reviewed businesses for each city
     SELECT SUM(B.review_count) AS top_count, BL.city_name
